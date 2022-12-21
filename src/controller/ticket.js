@@ -89,7 +89,7 @@ const TicketController = {
         rows: [tickets],
       } = await selectById(id);
 
-      if (!airlines) {
+      if (!tickets) {
         return response(
           res,
           404,
