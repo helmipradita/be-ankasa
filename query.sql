@@ -17,11 +17,17 @@ CREATE TABLE users (
 
 DROP TABLE users;
 
-CREATE TABLE tbl_portofolio1 (
-    id SERIAL PRIMARY KEY,
-    nama_app VARCHAR,
-	link_repo VARCHAR,
-	tipe_repo VARCHAR,
-	photo VARCHAR,
-	employee_id VARCHAR REFERENCES tbl_employee(id)
+CREATE TABLE tickets (
+    id VARCHAR PRIMARY KEY,
+    airlines_id VARCHAR,
+	departure_city VARCHAR,
+	arrival_city VARCHAR,
+	departure TIMESTAMP,
+	arrive TIMESTAMP,
+    price INTEGER,
+    stock INTEGER,
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NULL
 );
+
+DROP TABLE tickets;
