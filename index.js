@@ -18,7 +18,11 @@ app.use(bodyParser.json());
 app.use('/', mainRouter);
 
 app.all('*', (req, res, next) => {
-  res.status(404).json({ status: 'error', statusCode: 404 });
+  res.status(404).json({
+    status: 'error',
+    statusCode: 404,
+    message: 'this is root, check again the endpoint API',
+  });
 });
 
 app.use('/', (req, res, next) => {
