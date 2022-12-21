@@ -81,5 +81,4 @@ module.exports = {
   verification,
   changePassword,
   updateDataProfile,
-  setPortofolio,
 };
