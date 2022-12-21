@@ -63,7 +63,7 @@ const updateDataProfile = (data) => {
   const { id, phone, city, address, poscode } = data;
   return new Promise((resolve, reject) =>
     Pool.query(
-      `UPDATE users SET id='${id}',phone='${phone}',city='${city}',address ='${address}',poscode='${poscode}' where id='${id}'`,
+      `UPDATE users SET phone='${phone}', city='${city}', address='${address}' ,poscode='${poscode}' WHERE id='${id}'`,
       (err, result) => {
         if (!err) {
           resolve(result);

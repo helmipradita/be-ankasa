@@ -2,6 +2,7 @@ const express = require(`express`);
 const router = express.Router();
 const { UserController } = require(`../controller/user`);
 const { protect } = require('../middleware/auth');
+const { upload } = require('../middleware/upload');
 
 //auth
 router.post('/register', UserController.register);

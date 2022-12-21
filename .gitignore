@@ -2,5 +2,3 @@ node_modules
 package-lock.json
 .env
 note.txt
-ca.crt
-query.sql

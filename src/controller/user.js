@@ -16,11 +16,11 @@ const {
 const email = require('../middleware/email');
 const cloudinary = require('cloudinary').v2;
 
-// cloudinary.config({
-//   cloud_name: process.env.CLOUD_NAME,
-//   api_key: process.env.CLOUDINARY_API_KEY,
-//   api_secret: process.env.CLOUDINARY_API_SECRET,
-// });
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 const Port = process.env.PORT;
 const Host = process.env.HOST;
@@ -195,14 +195,17 @@ const UserController = {
   update: async (req, res, next) => {
     try {
       const { phone, city, address, poscode } = req.body;
+      const { id } = req.payload;
 
       const dataProfile = {
-        id: req.payload.id,
-        phone: req.body.phone,
-        city: req.body.city,
-        address: req.body.address,
-        poscode: req.body.poscode,
+        id,
+        phone,
+        city,
+        address,
+        poscode,
       };
+
+      console.log(dataProfile);
       await updateDataProfile(dataProfile);
       response(res, 200, true, dataProfile, 'update data success');
     } catch (error) {
