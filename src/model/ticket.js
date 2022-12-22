@@ -26,6 +26,18 @@ const insertTicket = (data) => {
   );
 };
 
+const findAdmin = (email) => {
+  return new Promise((resolve, reject) =>
+    Pool.query(`SELECT * FROM users WHERE email='${email}'`, (err, result) => {
+      if (!err) {
+        resolve(result);
+      } else {
+        reject(err);
+      }
+    })
+  );
+};
+
 const findAirlines = (id) => {
   return new Promise((resolve, reject) =>
     Pool.query(`SELECT * FROM airlines WHERE id='${id}'`, (err, result) => {
@@ -97,6 +109,18 @@ const update = (data) => {
   );
 };
 
+const findTicket = (id) => {
+  return new Promise((resolve, reject) =>
+    Pool.query(`SELECT * FROM tickets WHERE id='${id}'`, (err, result) => {
+      if (!err) {
+        resolve(result);
+      } else {
+        reject(err);
+      }
+    })
+  );
+};
+
 const deleteTicket = (id) => {
   return new Promise((resolve, reject) =>
     Pool.query(`DELETE FROM tickets WHERE id='${id}'`, (err, result) => {
@@ -111,10 +135,12 @@ const deleteTicket = (id) => {
 
 module.exports = {
   insertTicket,
+  findAdmin,
   findAirlines,
   selectAll,
   countAll,
   selectById,
   update,
+  findTicket,
   deleteTicket,
 };

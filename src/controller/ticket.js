@@ -1,31 +1,56 @@
 const { response } = require(`../middleware/common`);
 const {
   insertTicket,
+  findAdmin,
   findAirlines,
   selectAll,
   countAll,
   selectById,
   update,
+  findTicket,
   deleteTicket,
 } = require(`../model/ticket`);
 const { v4: uuidv4 } = require('uuid');
 
 const TicketController = {
   add: async (req, res, next) => {
-    const airlines_id = req.body.airlines_id;
+    const { email } = req.payload;
+    const {
+      airlines_id,
+      departure_city,
+      arrival_city,
+      departure,
+      arrive,
+      price,
+      stock,
+    } = req.body;
 
     let dataTicket = {
       id: uuidv4(),
-      airlines_id: req.body.airlines_id,
-      departure_city: req.body.departure_city,
-      arrival_city: req.body.arrival_city,
-      departure: req.body.departure,
-      arrive: req.body.arrive,
-      price: req.body.price,
-      stock: req.body.stock,
+      airlines_id,
+      departure_city,
+      arrival_city,
+      departure,
+      arrive,
+      price,
+      stock,
     };
 
     try {
+      const {
+        rows: [users],
+      } = await findAdmin(email);
+
+      if (users.role === 'customer') {
+        return response(
+          res,
+          404,
+          false,
+          null,
+          `only role admin can't add ticket`
+        );
+      }
+
       const {
         rows: [airlines],
       } = await findAirlines(airlines_id);
@@ -106,7 +131,10 @@ const TicketController = {
     }
   },
   edit: async (req, res, next) => {
+    const { email } = req.payload;
+
     const id = req.params.id;
+
     let dataTicket = {
       id,
       departure_city: req.body.departure_city,
@@ -116,7 +144,22 @@ const TicketController = {
       price: req.body.price,
       stock: req.body.stock,
     };
+
     try {
+      const {
+        rows: [users],
+      } = await findAdmin(email);
+
+      if (users.role === 'customer') {
+        return response(
+          res,
+          404,
+          false,
+          null,
+          `only role admin can't edit ticket`
+        );
+      }
+
       await update(dataTicket);
       response(res, 200, true, dataTicket, 'update ticket success');
     } catch (error) {
@@ -125,11 +168,28 @@ const TicketController = {
     }
   },
   delete: async (req, res, next) => {
+    const { email } = req.payload;
+
     const id = req.params.id;
+
     try {
       const {
+        rows: [users],
+      } = await findAdmin(email);
+
+      if (users.role === 'customer') {
+        return response(
+          res,
+          404,
+          false,
+          null,
+          `only role admin can't delete ticket`
+        );
+      }
+
+      const {
         rows: [tickets],
-      } = await deleteTicket(id);
+      } = await findTicket(id);
 
       if (!tickets) {
         return response(
@@ -141,6 +201,7 @@ const TicketController = {
         );
       }
 
+      await deleteTicket(id);
       response(res, 200, true, tickets, 'delete ticket success');
     } catch (error) {
       console.log(error);
