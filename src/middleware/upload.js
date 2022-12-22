@@ -1,34 +1,28 @@
 const multer = require('multer');
-const path = require('path');
-const cloudinary = require('cloudinary').v2;
-const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const { response } = require('./common');
 
-cloudinary.config({
-  cloud_name: process.env.CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
-
-const storage = new CloudinaryStorage({
-  cloudinary: cloudinary,
-  params: {
-    folder: 'flyer',
+const storage = multer.diskStorage({
+  filename: function (req, file, cb) {
+    const uniq = Date.now() + Math.round(Math.random() * 1e9);
+    cb(null, file.fieldname + '-' + uniq + '.png');
   },
 });
-
-let maxSize = 1024 * 1024 * 2;
 const upload = multer({
-  storage: storage,
-
+  limits: { fileSize: 1 * Math.pow(1024, 2 /* MBs*/) },
+  storage,
   fileFilter: (req, file, cb) => {
-    var ext = path.extname(file.originalname);
-    if (ext == '.jpg' || ext == '.png' || ext == '.jpeg') {
+    if (
+      file.mimetype == 'image/png' ||
+      file.mimetype == 'image/jpg' ||
+      file.mimetype == 'image/jpeg' ||
+      file.mimetype == 'video/mp4'
+    ) {
       cb(null, true);
     } else {
-      cb({ message: 'file not support' }, false);
+      cb(null, false);
+      return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
     }
   },
-  limits: { fileSize: maxSize },
 });
 
-module.exports = { upload };
+module.exports = upload;
