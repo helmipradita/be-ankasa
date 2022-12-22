@@ -1,11 +1,11 @@
 const Pool = require(`../config/db`);
 
-const register = (data) => {
-  const { id, fullname, email, password, otp } = data;
+const registerCustomer = (data) => {
+  const { id, fullname, email, password, role, otp } = data;
   return new Promise((resolve, reject) =>
     Pool.query(
-      `INSERT INTO users(id, fullname,  email, password, otp) 
-          VALUES('${id}','${fullname}','${email}','${password}','${otp}')`,
+      `INSERT INTO users(id, fullname,  email, password, role, otp) 
+          VALUES('${id}','${fullname}','${email}','${password}','${role}','${otp}')`,
       (err, result) => {
         if (!err) {
           resolve(result);
@@ -60,10 +60,27 @@ const changePassword = (email, password) => {
 };
 
 const updateDataProfile = (data) => {
-  const { id, phone, city, address, poscode, photo } = data;
+  const { id, fullname, phone, city, address, poscode, photo } = data;
   return new Promise((resolve, reject) =>
     Pool.query(
-      `UPDATE users SET phone='${phone}', city='${city}', address='${address}' ,poscode='${poscode}',photo='${photo}' WHERE id='${id}'`,
+      `UPDATE users SET fullname='${fullname}', phone='${phone}', city='${city}', address='${address}' ,poscode='${poscode}',photo='${photo}' WHERE id='${id}'`,
+      (err, result) => {
+        if (!err) {
+          resolve(result);
+        } else {
+          reject(err);
+        }
+      }
+    )
+  );
+};
+
+const registerAdmin = (data) => {
+  const { id, fullname, email, password, role, otp } = data;
+  return new Promise((resolve, reject) =>
+    Pool.query(
+      `INSERT INTO users(id, fullname,  email, password, role, otp) 
+          VALUES('${id}','${fullname}','${email}','${password}','${role}','${otp}')`,
       (err, result) => {
         if (!err) {
           resolve(result);
@@ -76,9 +93,10 @@ const updateDataProfile = (data) => {
 };
 
 module.exports = {
-  register,
+  registerCustomer,
   findEmail,
   verification,
   changePassword,
   updateDataProfile,
+  registerAdmin,
 };

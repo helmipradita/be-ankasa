@@ -5,7 +5,9 @@ const { protect } = require('../middleware/auth');
 const upload = require('../middleware/upload');
 
 //auth
-router.post('/register', UserController.register);
+router.post('/register/:role', UserController.register);
+router.post('/register/:role', UserController.registerAdmin);
+
 router.post('/verification', UserController.verificationOtp);
 router.post('/login', UserController.login);
 router.post('/forgot-password', UserController.forgotPassword);

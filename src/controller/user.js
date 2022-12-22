@@ -1,6 +1,6 @@
 const { response } = require(`../middleware/common`);
 const {
-  register,
+  registerCustomer,
   findEmail,
   verification,
   changePassword,
@@ -42,10 +42,11 @@ const UserController = {
       fullname: req.body.fullname,
       email: req.body.email,
       password,
+      role: req.params.role,
       otp,
     };
     try {
-      const result = await register(data);
+      const result = await registerCustomer(data);
       if (result) {
         let verifUrl = `http://${Host}:${Port}/users/${req.body.email}/${otp}`;
         let text = `Hello ${req.body.fullname} \n Thank you for join us. Please confirm your email by clicking on the following link ${verifUrl}`;
@@ -119,7 +120,7 @@ const UserController = {
       id: users.id,
       fullname: users.fullname,
       email: users.email,
-      role: users.role,
+      role: 'customer',
     };
     let accessToken = generateToken(payload);
     let refToken = generateRefreshToken(payload);
@@ -188,7 +189,7 @@ const UserController = {
   },
   update: async (req, res, next) => {
     try {
-      const { phone, city, address, poscode } = req.body;
+      const { fullname, phone, city, address, poscode } = req.body;
       const { id } = req.payload;
 
       const image = await cloudinary.uploader.upload(req.file.path, {
@@ -197,6 +198,7 @@ const UserController = {
 
       const dataProfile = {
         id,
+        fullname,
         phone,
         city,
         address,
@@ -204,12 +206,59 @@ const UserController = {
         photo: image.url,
       };
 
-      console.log(dataProfile);
       await updateDataProfile(dataProfile);
       response(res, 200, true, dataProfile, 'update data success');
     } catch (error) {
       console.log(error);
       response(res, 404, false, 'update data failed');
+    }
+  },
+  //auth admin
+  registerAdmin: async (req, res, next) => {
+    let {
+      rows: [users],
+    } = await findEmail(req.body.email);
+
+    if (users) {
+      return response(res, 404, false, 'email already use', ' register fail');
+    }
+
+    // create otp
+    let digits = '0123456789';
+    let otp = '';
+    for (let i = 0; i < 6; i++) {
+      otp += digits[Math.floor(Math.random() * 10)];
+    }
+
+    let password = bcrypt.hashSync(req.body.password);
+    let data = {
+      id: uuidv4(),
+      fullname: req.body.fullname,
+      email: req.body.email,
+      password,
+      role: 'admin',
+      otp,
+    };
+    try {
+      const result = await registerAdmin(data);
+      if (result) {
+        let verifUrl = `http://${Host}:${Port}/users/${req.body.email}/${otp}`;
+        let text = `Hello ${req.body.fullname} \n Thank you for join us. Please confirm your email by clicking on the following link ${verifUrl}`;
+        const subject = `${otp} is your otp`;
+        let sendEmail = email(req.body.email, subject, text);
+        if (sendEmail == 'email not sent!') {
+          return response(res, 404, false, null, 'register fail');
+        }
+        response(
+          res,
+          200,
+          true,
+          { email: data.email },
+          'register success please check your email'
+        );
+      }
+    } catch (err) {
+      response(res, 404, false, err, ' register fail');
     }
   },
 };
