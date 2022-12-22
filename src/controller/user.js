@@ -14,13 +14,7 @@ const {
   decodeToken,
 } = require(`../helpers/auth`);
 const email = require('../middleware/email');
-const cloudinary = require('cloudinary').v2;
-
-cloudinary.config({
-  cloud_name: process.env.CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
+const cloudinary = require('../config/photo');
 
 const Port = process.env.PORT;
 const Host = process.env.HOST;
@@ -197,12 +191,17 @@ const UserController = {
       const { phone, city, address, poscode } = req.body;
       const { id } = req.payload;
 
+      const image = await cloudinary.uploader.upload(req.file.path, {
+        folder: 'toko',
+      });
+
       const dataProfile = {
         id,
         phone,
         city,
         address,
         poscode,
+        photo: image.url,
       };
 
       console.log(dataProfile);

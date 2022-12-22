@@ -60,10 +60,10 @@ const changePassword = (email, password) => {
 };
 
 const updateDataProfile = (data) => {
-  const { id, phone, city, address, poscode } = data;
+  const { id, phone, city, address, poscode, photo } = data;
   return new Promise((resolve, reject) =>
     Pool.query(
-      `UPDATE users SET phone='${phone}', city='${city}', address='${address}' ,poscode='${poscode}' WHERE id='${id}'`,
+      `UPDATE users SET phone='${phone}', city='${city}', address='${address}' ,poscode='${poscode}',photo='${photo}' WHERE id='${id}'`,
       (err, result) => {
         if (!err) {
           resolve(result);
