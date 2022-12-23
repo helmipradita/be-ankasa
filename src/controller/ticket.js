@@ -23,6 +23,10 @@ const TicketController = {
       arrive,
       price,
       stock,
+      gate,
+      terminal,
+      type,
+      code,
     } = req.body;
 
     let dataTicket = {
@@ -34,6 +38,10 @@ const TicketController = {
       arrive,
       price,
       stock,
+      gate,
+      terminal,
+      type,
+      code,
     };
 
     try {
@@ -132,17 +140,35 @@ const TicketController = {
   },
   edit: async (req, res, next) => {
     const { email } = req.payload;
+    const {
+      airlines_id,
+      departure_city,
+      arrival_city,
+      departure,
+      arrive,
+      price,
+      stock,
+      gate,
+      terminal,
+      type,
+      code,
+    } = req.body;
 
     const id = req.params.id;
 
     let dataTicket = {
       id,
-      departure_city: req.body.departure_city,
-      arrival_city: req.body.arrival_city,
-      departure: req.body.departure,
-      arrive: req.body.arrive,
-      price: req.body.price,
-      stock: req.body.stock,
+      airlines_id,
+      departure_city,
+      arrival_city,
+      departure,
+      arrive,
+      price,
+      stock,
+      gate,
+      terminal,
+      type,
+      code,
     };
 
     try {
