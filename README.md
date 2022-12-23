@@ -3,7 +3,14 @@
 
 Project API flyer-app that is used to order airplane tickets.
 
+## Sections
 
+### List
+
+* [Run Locally](https://github.com/helmipradita/flyer-be/edit/main/README.md#run-locally)
+* [Demo](https://github.com/helmipradita/flyer-be/edit/main/README.md#demo)
+* [API Reference - User](#api-reference---user)
+* [API Reference - Ticket](#api-reference---ticket)
 
 ## Run Locally
 
@@ -64,8 +71,6 @@ API deploy https://flyer-be-production.up.railway.app
 
 
 ## API Reference - User
-
-API user sendiri dibagi menjadi 2 role yaitu customer dan admin, sehingga pendaftaran akun terdapat 2 endpoint.
 
 #### Register customer
 
