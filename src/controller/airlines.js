@@ -1,21 +1,40 @@
 const { response } = require(`../middleware/common`);
-const { v4: uuidv4 } = require("uuid");
-const cloudinary = require("../config/photo");
+const { v4: uuidv4 } = require('uuid');
+const cloudinary = require('../config/photo');
 const {
   insert,
   update,
   getAll,
   deleteData,
   detail,
+  findAdmin,
+  findAirlines,
 } = require(`../model/airlines`);
 
 const AirlinesController = {
   insert: async (req, res) => {
     try {
+      const { email } = req.payload;
+
+      const {
+        rows: [users],
+      } = await findAdmin(email);
+
+      if (users.role === 'customer') {
+        return response(
+          res,
+          404,
+          false,
+          null,
+          `only role admin can't delete ticket`
+        );
+      }
+
       const id = uuidv4();
       const image = await cloudinary.uploader.upload(req.file.path, {
-        folder: "toko",
+        folder: 'toko',
       });
+
       const data = {
         id,
         ai_name: req.body.ai_name,
@@ -23,20 +42,50 @@ const AirlinesController = {
         pic: req.body.pic,
         phonenumber: req.body.phonenumber,
       };
+
       await insert(data);
-      return response(res, 200, true, data, "ADD AIRLINES DATA SUCCESS");
+      return response(res, 200, true, data, 'ADD AIRLINES DATA SUCCESS');
     } catch (error) {
-      return response(res, 404, true, error, "ADD AIRLINES DATA FAILED");
-      console.log(logo);
+      return response(res, 404, true, error, 'ADD AIRLINES DATA FAILED');
     }
   },
   update: async (req, res) => {
     try {
+      const { email } = req.payload;
+      const id = req.params.id;
+
+      const {
+        rows: [users],
+      } = await findAdmin(email);
+
+      if (users.role === 'customer') {
+        return response(
+          res,
+          404,
+          false,
+          null,
+          `only role admin can't delete ticket`
+        );
+      }
+
+      const {
+        rows: [airlines],
+      } = await findAirlines(id);
+
+      if (!airlines) {
+        return response(
+          res,
+          404,
+          false,
+          null,
+          'airlines not found, check again'
+        );
+      }
+
       const image = await cloudinary.uploader.upload(req.file.path, {
-        folder: "toko",
+        folder: 'toko',
       });
 
-      const id = req.params.id;
       const data = {
         id,
         ai_name: req.body.ai_name,
@@ -44,21 +93,50 @@ const AirlinesController = {
         pic: req.body.pic,
         phonenumber: req.body.phonenumber,
       };
-      console.log(id);
-      console.log(data);
+
       await update(data);
-      return response(res, 200, true, null, "UPDATE AIRLINES DATA SUCCESS");
+      return response(res, 200, true, null, 'UPDATE AIRLINES DATA SUCCESS');
     } catch (error) {
-      return response(res, 404, true, error, "UPDATE AIRLINES DATA FAILED");
+      return response(res, 404, true, error, 'UPDATE AIRLINES DATA FAILED');
     }
   },
   deleteData: async (req, res) => {
     try {
+      const { email } = req.payload;
       const id = req.params.id;
+
+      const {
+        rows: [users],
+      } = await findAdmin(email);
+
+      if (users.role === 'customer') {
+        return response(
+          res,
+          404,
+          false,
+          null,
+          `only role admin can't delete ticket`
+        );
+      }
+
+      const {
+        rows: [airlines],
+      } = await findAirlines(id);
+
+      if (!airlines) {
+        return response(
+          res,
+          404,
+          false,
+          null,
+          'airlines not found, check again'
+        );
+      }
+
       await deleteData(id);
-      return response(res, 200, true, null, "DELETE AIRLINES DATA SUCCESS");
+      return response(res, 200, true, null, 'DELETE AIRLINES DATA SUCCESS');
     } catch (error) {
-      return response(res, 404, true, error, "DELETE AIRLINES DATA FAILED");
+      return response(res, 404, true, error, 'DELETE AIRLINES DATA FAILED');
     }
   },
   detail: async (req, res) => {
@@ -70,18 +148,18 @@ const AirlinesController = {
         200,
         true,
         result.rows,
-        "DELETE AIRLINES DATA SUCCESS"
+        'DELETE AIRLINES DATA SUCCESS'
       );
     } catch (error) {
-      return response(res, 404, true, error, "DELETE AIRLINES DATA FAILED");
+      return response(res, 404, true, error, 'DELETE AIRLINES DATA FAILED');
     }
   },
   getAllData: (req, res, next) => {
     getAll()
       .then((result) =>
-        response(res, 200, true, result.rows, "get data success")
+        response(res, 200, true, result.rows, 'get data success')
       )
-      .catch((err) => response(res, 404, false, "get data faill"));
+      .catch((err) => response(res, 404, false, 'get data faill'));
   },
 };
 

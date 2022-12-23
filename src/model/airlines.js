@@ -1,4 +1,4 @@
-const Pool = require("../config/db");
+const Pool = require('../config/db');
 
 const insert = (data) => {
   const { id, ai_name, logo, pic, phonenumber } = data;
@@ -68,10 +68,36 @@ const deleteData = (id) => {
   });
 };
 
+const findAdmin = (email) => {
+  return new Promise((resolve, reject) =>
+    Pool.query(`SELECT * FROM users WHERE email='${email}'`, (err, result) => {
+      if (!err) {
+        resolve(result);
+      } else {
+        reject(err);
+      }
+    })
+  );
+};
+
+const findAirlines = (id) => {
+  return new Promise((resolve, reject) =>
+    Pool.query(`SELECT * FROM airlines WHERE id='${id}'`, (err, result) => {
+      if (!err) {
+        resolve(result);
+      } else {
+        reject(err);
+      }
+    })
+  );
+};
+
 module.exports = {
   insert,
   detail,
   update,
   getAll,
   deleteData,
+  findAdmin,
+  findAirlines,
 };
