@@ -1,6 +1,6 @@
 const { response } = require(`../middleware/common`);
-const { v4: uuidv4 } = require('uuid');
-const cloudinary = require('../config/photo');
+const { v4: uuidv4 } = require("uuid");
+const cloudinary = require("../config/photo");
 const {
   insert,
   update,
@@ -9,6 +9,7 @@ const {
   detail,
   findAdmin,
   findAirlines,
+  countAll,
 } = require(`../model/airlines`);
 
 const AirlinesController = {
@@ -20,7 +21,7 @@ const AirlinesController = {
         rows: [users],
       } = await findAdmin(email);
 
-      if (users.role === 'customer') {
+      if (users.role === "customer") {
         return response(
           res,
           404,
@@ -32,7 +33,7 @@ const AirlinesController = {
 
       const id = uuidv4();
       const image = await cloudinary.uploader.upload(req.file.path, {
-        folder: 'toko',
+        folder: "toko",
       });
 
       const data = {
@@ -44,9 +45,9 @@ const AirlinesController = {
       };
 
       await insert(data);
-      return response(res, 200, true, data, 'ADD AIRLINES DATA SUCCESS');
+      return response(res, 200, true, data, "ADD AIRLINES DATA SUCCESS");
     } catch (error) {
-      return response(res, 404, true, error, 'ADD AIRLINES DATA FAILED');
+      return response(res, 404, true, error, "ADD AIRLINES DATA FAILED");
     }
   },
   update: async (req, res) => {
@@ -58,7 +59,7 @@ const AirlinesController = {
         rows: [users],
       } = await findAdmin(email);
 
-      if (users.role === 'customer') {
+      if (users.role === "customer") {
         return response(
           res,
           404,
@@ -78,12 +79,12 @@ const AirlinesController = {
           404,
           false,
           null,
-          'airlines not found, check again'
+          "airlines not found, check again"
         );
       }
 
       const image = await cloudinary.uploader.upload(req.file.path, {
-        folder: 'toko',
+        folder: "toko",
       });
 
       const data = {
@@ -95,9 +96,9 @@ const AirlinesController = {
       };
 
       await update(data);
-      return response(res, 200, true, null, 'UPDATE AIRLINES DATA SUCCESS');
+      return response(res, 200, true, null, "UPDATE AIRLINES DATA SUCCESS");
     } catch (error) {
-      return response(res, 404, true, error, 'UPDATE AIRLINES DATA FAILED');
+      return response(res, 404, true, error, "UPDATE AIRLINES DATA FAILED");
     }
   },
   deleteData: async (req, res) => {
@@ -109,7 +110,7 @@ const AirlinesController = {
         rows: [users],
       } = await findAdmin(email);
 
-      if (users.role === 'customer') {
+      if (users.role === "customer") {
         return response(
           res,
           404,
@@ -129,14 +130,14 @@ const AirlinesController = {
           404,
           false,
           null,
-          'airlines not found, check again'
+          "airlines not found, check again"
         );
       }
 
       await deleteData(id);
-      return response(res, 200, true, null, 'DELETE AIRLINES DATA SUCCESS');
+      return response(res, 200, true, null, "DELETE AIRLINES DATA SUCCESS");
     } catch (error) {
-      return response(res, 404, true, error, 'DELETE AIRLINES DATA FAILED');
+      return response(res, 404, true, error, "DELETE AIRLINES DATA FAILED");
     }
   },
   detail: async (req, res) => {
@@ -148,18 +149,53 @@ const AirlinesController = {
         200,
         true,
         result.rows,
-        'DELETE AIRLINES DATA SUCCESS'
+        "DELETE AIRLINES DATA SUCCESS"
       );
     } catch (error) {
-      return response(res, 404, true, error, 'DELETE AIRLINES DATA FAILED');
+      return response(res, 404, true, error, "DELETE AIRLINES DATA FAILED");
     }
   },
-  getAllData: (req, res, next) => {
-    getAll()
-      .then((result) =>
-        response(res, 200, true, result.rows, 'get data success')
-      )
-      .catch((err) => response(res, 404, false, 'get data faill'));
+  getAllData: async (req, res, next) => {
+    try {
+      const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 5;
+      const sortBy = req.query.sortBy || "id";
+      const sortOrder = req.query.sortOrder || "DESC";
+      const search = req.query.search || "";
+      const offset = (page - 1) * limit;
+
+      const result = await getAll({
+        search,
+        sortBy,
+        sortOrder,
+        limit,
+        offset,
+      });
+
+      const {
+        rows: [count],
+      } = await countAll();
+      const totalData = parseInt(count.total);
+      const totalPage = Math.ceil(totalData / limit);
+      const pagination = {
+        currentPage: page,
+        limit,
+        totalData,
+        totalPage,
+      };
+
+      response(
+        res,
+        200,
+        true,
+        result.rows,
+        "get airlines data success",
+        pagination
+      );
+    } catch (error) {
+      console.log(error);
+      response(res, 404, false, null, " get airlines data failed");
+    }
   },
 };
 

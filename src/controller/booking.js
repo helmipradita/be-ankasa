@@ -9,6 +9,7 @@ const {
   getBookingAdmin,
   detailBook,
   allBookUser,
+  countAll,
 } = require(`../model/booking`);
 
 const BookingController = {
@@ -66,18 +67,88 @@ const BookingController = {
   },
   getAllAdmin: async (req, res) => {
     try {
-      const result = await getBookingAdmin();
-      return response(res, 200, true, result.rows, "GET DATA SUCCESS");
+      const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 5;
+      const sortBy = req.query.sortBy || "id";
+      const sortOrder = req.query.sortOrder || "DESC";
+      const fullname = req.query.fullname || "";
+      const tickets = req.query.tickets || "";
+      const offset = (page - 1) * limit;
+      const searchid = req.query.searchid || "";
+      const id_users = req.payload.id;
+
+      const result = await getBookingAdmin({
+        searchid,
+        tickets,
+        fullname,
+        sortBy,
+        sortOrder,
+        limit,
+        offset,
+      });
+
+      const {
+        rows: [count],
+      } = await countAll();
+      const totalData = parseInt(count.total);
+      const totalPage = Math.ceil(totalData / limit);
+      const pagination = {
+        currentPage: page,
+        limit,
+        totalData,
+        totalPage,
+      };
+      return response(
+        res,
+        200,
+        true,
+        result.rows,
+        "GET DATA SUCCESS",
+        pagination
+      );
     } catch (err) {
-      return response(res, 404, false, err, "GET DATA FAILED");
+      return response(res, 404, false, err, "GET DATA FAILED", err);
     }
   },
   getBooking: async (req, res) => {
     try {
+      const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 5;
+      const sortBy = req.query.sortBy || "id";
+      const sortOrder = req.query.sortOrder || "DESC";
+      const search = req.query.search || "";
+      const offset = (page - 1) * limit;
       const id_users = req.payload.id;
-      console.log(id_users);
-      const result = await allBookUser(id_users);
-      return response(res, 200, true, result, "GET DATA SUCCESS");
+
+      const result = await allBookUser({
+        id_users,
+        search,
+        sortBy,
+        sortOrder,
+        limit,
+        offset,
+      });
+
+      const {
+        rows: [count],
+      } = await countAll();
+      const totalData = parseInt(count.total);
+      const totalPage = Math.ceil(totalData / limit);
+      const pagination = {
+        currentPage: page,
+        limit,
+        totalData,
+        totalPage,
+      };
+
+      return response(
+        res,
+        200,
+        true,
+        result.rows,
+        "GET DATA SUCCESS",
+        pagination
+      );
     } catch (err) {
       return response(res, 400, false, err, "GET DATA FAILED");
     }
