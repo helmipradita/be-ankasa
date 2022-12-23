@@ -117,8 +117,8 @@ const allBookUser = ({
 const detailBook = (id) => {
   return new Promise((resolve, reject) =>
     Pool.query(
-      `SELECT bo.id,ti.code as code , ti.class as class ,ti.terminal as terminal,
-      ti.gate as gate,ti.departure_time as departure_time,ti.departure_city
+      `SELECT bo.id,ti.code as code , ti.type as type ,ti.terminal as terminal,
+      ti.gate as gate,ti.departure as departure,ti.departure_city
       as departure_city,ti.arrival_city as arrival_city FROM booking as bo JOIN
       airlines as ai ON bo.id_airlines = ai.id JOIN tickets as ti ON bo.id_tickets = ti.id
       WHERE bo.id = '${id}'`,
