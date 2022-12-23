@@ -330,7 +330,7 @@ Response 200
 </details>
 
 
-## API Reference - User
+## API Reference - Ticket
 
 <details>
 <summary>Show</summary>
