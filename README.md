@@ -19,10 +19,10 @@ Project API flyer-app that is used to order airplane tickets.
 ## Screenshots flow
 
 ### Role customer
-![Role customer](https://res.cloudinary.com/dnu5su7ft/image/upload/v1671814860/Role_Customer_rulh7c.png)
+![Role customer](https://res.cloudinary.com/dnu5su7ft/image/upload/v1671817359/Role_Customer_2_uovz76.png)
 
 ### Role admin
-![Role admin](https://res.cloudinary.com/dnu5su7ft/image/upload/v1671814860/Role_Admin_uldtqc.png)
+![Role admin](https://res.cloudinary.com/dnu5su7ft/image/upload/v1671817479/Role_Admin_1_id3rxj.png)
 
 
 ## Run Locally
