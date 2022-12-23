@@ -6,12 +6,24 @@ Project API flyer-app that is used to order airplane tickets.
 
 ### List
 
+- [Screenshoots flow](https://github.com/helmipradita/flyer-be/edit/main/README.md#screenshots-flow)
+  - [Role customer](https://github.com/helmipradita/flyer-be/edit/main/README.md#role-customer)
+  - [Role admin](https://github.com/helmipradita/flyer-be/edit/main/README.md#role-admin)
 - [Run Locally](https://github.com/helmipradita/flyer-be/edit/main/README.md#run-locally)
 - [Demo](https://github.com/helmipradita/flyer-be/edit/main/README.md#demo)
 - [API Reference - User](#api-reference---user)
 - [API Reference - Ticket](#api-reference---ticket)
 - [API Reference - Booking](#api-reference---booking)
 - [API Reference - Airlines](#api-reference---airlines)
+
+## Screenshots flow
+
+### Role customer
+![Role customer](https://res.cloudinary.com/dnu5su7ft/image/upload/v1671814860/Role_Customer_rulh7c.png)
+
+### Role admin
+![Role admin](https://res.cloudinary.com/dnu5su7ft/image/upload/v1671814860/Role_Admin_uldtqc.png)
+
 
 ## Run Locally
 
@@ -67,9 +79,17 @@ Start the server
 
 ## Demo
 
-API deploy https://flyer-be-production.up.railway.app
+API deploy 
+
+```bash
+https://flyer-be-production.up.railway.app
+```
 
 ## API Reference - User
+
+<details>
+<summary>Show</summary>
+<br>
 
 #### Register customer
 
@@ -307,9 +327,14 @@ Response 200
 }
 ```
 
-## API Reference - Ticket
+</details>
 
-API ticket digunakan untuk menambahkan, melihat, mengedit dan menghapus ticket pesawat.
+
+## API Reference - User
+
+<details>
+<summary>Show</summary>
+<br>
 
 #### Insert ticket
 
@@ -1148,3 +1173,4 @@ Response 200
   }
 }
 ```
+</details>
