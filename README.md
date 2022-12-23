@@ -69,7 +69,7 @@ API user sendiri dibagi menjadi 2 role yaitu customer dan admin, sehingga pendaf
 
 #### Register customer
 
-```http
+```
   POST /user/register/customer
 ```
 
@@ -96,7 +96,7 @@ Response 200
 
 #### Register admin
 
-```http
+```
   POST /user/register/admin
 ```
 
@@ -123,7 +123,7 @@ Response 200
 
 #### Verification
 
-```http
+```
   POST /user/verification
 ```
 
@@ -147,7 +147,7 @@ Response 200
 
 #### Forgot password
 
-```http
+```
   POST /user/forgot-password
 ```
 
@@ -170,7 +170,7 @@ Response 200
 
 #### Reset password
 
-```http
+```
   POST /user/reset-password/:token
 ```
 
@@ -193,7 +193,7 @@ Response 200
 
 #### Login
 
-```http
+```
   POST /user/login
 ```
 
@@ -230,7 +230,7 @@ Response 200
 
 #### Get profile user
 
-```http
+```
   GET /user/profile
 ```
 
@@ -263,7 +263,7 @@ Response 200
 
 #### Edit profile user
 
-```http
+```
   PUT /user/profile
 ```
 
@@ -308,7 +308,7 @@ API ticket digunakan untuk menambahkan, melihat, mengedit dan menghapus ticket p
 
 #### Insert ticket
 
-```http
+```
   POST /ticket/add
 ```
 
@@ -360,7 +360,7 @@ Response 200
 
 #### Get all ticket
 
-```http
+```
   GET /ticket
 ```
 
@@ -454,7 +454,7 @@ Response 200
 
 #### Get ticket by id
 
-```http
+```
   GET /ticket/:id
 ```
 
@@ -493,7 +493,7 @@ Response 200
 
 #### Update ticket
 
-```http
+```
   PUT /ticket/:id
 ```
 
@@ -547,7 +547,7 @@ Response 200
 
 #### Delete ticket
 
-```http
+```
   DELETE /ticket/:id
 ```
 
