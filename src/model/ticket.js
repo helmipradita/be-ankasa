@@ -4,8 +4,8 @@ const insertTicket = (data) => {
   const {
     id,
     airlines_id,
-    departure_city,
-    arrival_city,
+    departure_id,
+    arrival_id,
     departure,
     arrive,
     price,
@@ -17,8 +17,8 @@ const insertTicket = (data) => {
   } = data;
   return new Promise((resolve, reject) =>
     Pool.query(
-      `INSERT INTO tickets(id, airlines_id,  departure_city, arrival_city, departure , arrive , price , stock , gate , terminal , type , code) 
-          VALUES('${id}','${airlines_id}','${departure_city}','${arrival_city}','${departure}','${arrive}','${price}','${stock}','${gate}','${terminal}','${type}','${code}')`,
+      `INSERT INTO tickets(id, airlines_id,  departure_id, arrival_id, departure , arrive , price , stock , gate , terminal , type , code) 
+          VALUES('${id}','${airlines_id}','${departure_id}','${arrival_id}','${departure}','${arrive}','${price}','${stock}','${gate}','${terminal}','${type}','${code}')`,
       (err, result) => {
         if (!err) {
           resolve(result);
@@ -33,6 +33,18 @@ const insertTicket = (data) => {
 const findAdmin = (email) => {
   return new Promise((resolve, reject) =>
     Pool.query(`SELECT * FROM users WHERE email='${email}'`, (err, result) => {
+      if (!err) {
+        resolve(result);
+      } else {
+        reject(err);
+      }
+    })
+  );
+};
+
+const findAirport = (id) => {
+  return new Promise((resolve, reject) =>
+    Pool.query(`SELECT * FROM tbl_airport WHERE id='${id}'`, (err, result) => {
       if (!err) {
         resolve(result);
       } else {
@@ -57,10 +69,16 @@ const findAirlines = (id) => {
 const selectAll = ({ limit, offset, sortBy, sortOrder, search }) => {
   return new Promise((resolve, reject) =>
     Pool.query(
-      `SELECT tickets.id, airlines.airlines_names as airlines_names, airlines.logo as logo, tickets.departure_city, tickets.arrival_city, tickets.departure , tickets.arrive, tickets.price, tickets.stock, tickets.gate, tickets.terminal, tickets.type, tickets.code
-      FROM tickets
-      INNER JOIN airlines
-      ON tickets.airlines_id = airlines.id WHERE airlines.airlines_names
+      `SELECT tic.id, air.airlines_names as airlines_name, 
+            dep.name as departure_name, dep.code as departure_code,
+            arr.name as arrival_name, arr.code as  arrival_code,
+            tic.departure, tic.arrive, tic.price, tic.stock, tic.gate, 
+              tic.terminal, tic.type, tic.code, tic.created_at, tic.updated_at
+      FROM tickets tic
+      INNER JOIN airlines air ON tic.airlines_id = air.id
+      INNER JOIN tbl_airport dep ON tic.departure_id = dep.id
+      INNER JOIN tbl_airport arr ON tic.arrival_id = arr.id
+      WHERE air.airlines_names
           ILIKE '%${search}%' ORDER BY ${sortBy} ${sortOrder} 
           LIMIT ${limit} OFFSET ${offset}`,
       (err, result) => {
@@ -81,7 +99,7 @@ const countAll = () => {
 const selectById = (id) => {
   return new Promise((resolve, reject) =>
     Pool.query(
-      `SELECT tickets.id, airlines.airlines_names as airlines_names, airlines.logo as logo, tickets.departure_city, tickets.arrival_city, tickets.departure , tickets.arrive, tickets.price, tickets.stock, tickets.gate, tickets.terminal, tickets.type, tickets.code, tickets.created_at, tickets.updated_at
+      `SELECT tickets.id, airlines.airlines_names as airlines_names, airlines.logo as logo, tickets.departure_id, tickets.arrival_id, tickets.departure , tickets.arrive, tickets.price, tickets.stock, tickets.gate, tickets.terminal, tickets.type, tickets.code, tickets.created_at, tickets.updated_at
     FROM tickets
     INNER JOIN airlines
     ON tickets.airlines_id = airlines.id WHERE tickets.id='${id}'`,
@@ -100,8 +118,8 @@ const update = (data) => {
   const {
     id,
     airlines_id,
-    departure_city,
-    arrival_city,
+    departure_id,
+    arrival_id,
     departure,
     arrive,
     price,
@@ -113,7 +131,7 @@ const update = (data) => {
   } = data;
   return new Promise((resolve, reject) =>
     Pool.query(
-      `UPDATE tickets SET airlines_id='${airlines_id}',departure_city='${departure_city}', arrival_city='${arrival_city}', departure='${departure}', arrive='${arrive}', price='${price}', stock='${stock}', gate='${gate}', terminal='${terminal}', type='${type}', code='${code}', updated_at=NOW() WHERE id='${id}'`,
+      `UPDATE tickets SET airlines_id='${airlines_id}',departure_id='${departure_id}', arrival_id='${arrival_id}', departure='${departure}', arrive='${arrive}', price='${price}', stock='${stock}', gate='${gate}', terminal='${terminal}', type='${type}', code='${code}', updated_at=NOW() WHERE id='${id}'`,
       (err, result) => {
         if (!err) {
           resolve(result);
@@ -152,6 +170,7 @@ const deleteTicket = (id) => {
 module.exports = {
   insertTicket,
   findAdmin,
+  findAirport,
   findAirlines,
   selectAll,
   countAll,

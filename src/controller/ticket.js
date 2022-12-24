@@ -2,6 +2,7 @@ const { response } = require(`../middleware/common`);
 const {
   insertTicket,
   findAdmin,
+  findAirport,
   findAirlines,
   selectAll,
   countAll,
@@ -14,37 +15,38 @@ const { v4: uuidv4 } = require('uuid');
 
 const TicketController = {
   add: async (req, res, next) => {
-    const { email } = req.payload;
-    const {
-      airlines_id,
-      departure_city,
-      arrival_city,
-      departure,
-      arrive,
-      price,
-      stock,
-      gate,
-      terminal,
-      type,
-      code,
-    } = req.body;
-
-    let dataTicket = {
-      id: uuidv4(),
-      airlines_id,
-      departure_city,
-      arrival_city,
-      departure,
-      arrive,
-      price,
-      stock,
-      gate,
-      terminal,
-      type,
-      code,
-    };
-
     try {
+      const { email } = req.payload;
+      const {
+        airlines_id,
+        departure_id,
+        arrival_id,
+        departure,
+        arrive,
+        price,
+        stock,
+        gate,
+        terminal,
+        type,
+        code,
+      } = req.body;
+
+      let dataTicket = {
+        id: uuidv4(),
+        airlines_id,
+        departure_id,
+        arrival_id,
+        departure,
+        arrive,
+        price,
+        stock,
+        gate,
+        terminal,
+        type,
+        code,
+      };
+
+      //check role
       const {
         rows: [users],
       } = await findAdmin(email);
@@ -59,6 +61,48 @@ const TicketController = {
         );
       }
 
+      //check airport - departure
+      const {
+        rows: [tbl_airportDep],
+      } = await findAirport(departure_id);
+
+      if (!tbl_airportDep) {
+        return response(
+          res,
+          404,
+          false,
+          null,
+          'departure not found, check again'
+        );
+      }
+
+      //check airport - arrival
+      const {
+        rows: [tbl_airportAr],
+      } = await findAirport(arrival_id);
+
+      if (!tbl_airportAr) {
+        return response(
+          res,
+          404,
+          false,
+          null,
+          'arrival not found, check again'
+        );
+      }
+
+      //check airport - departure & arrival is match
+      if (tbl_airportDep.id === tbl_airportAr.id) {
+        return response(
+          res,
+          404,
+          false,
+          null,
+          `departure and arrival can't be the same, check again`
+        );
+      }
+
+      //check airlines
       const {
         rows: [airlines],
       } = await findAirlines(airlines_id);
@@ -116,8 +160,8 @@ const TicketController = {
     }
   },
   getById: async (req, res, next) => {
-    const id = req.params.id;
     try {
+      const id = req.params.id;
       const {
         rows: [tickets],
       } = await selectById(id);
@@ -139,39 +183,39 @@ const TicketController = {
     }
   },
   edit: async (req, res, next) => {
-    const { email } = req.payload;
-    const {
-      airlines_id,
-      departure_city,
-      arrival_city,
-      departure,
-      arrive,
-      price,
-      stock,
-      gate,
-      terminal,
-      type,
-      code,
-    } = req.body;
-
-    const id = req.params.id;
-
-    let dataTicket = {
-      id,
-      airlines_id,
-      departure_city,
-      arrival_city,
-      departure,
-      arrive,
-      price,
-      stock,
-      gate,
-      terminal,
-      type,
-      code,
-    };
-
     try {
+      const { email } = req.payload;
+      const {
+        airlines_id,
+        departure_id,
+        arrival_id,
+        departure,
+        arrive,
+        price,
+        stock,
+        gate,
+        terminal,
+        type,
+        code,
+      } = req.body;
+
+      const id = req.params.id;
+
+      let dataTicket = {
+        id,
+        airlines_id,
+        departure_id,
+        arrival_id,
+        departure,
+        arrive,
+        price,
+        stock,
+        gate,
+        terminal,
+        type,
+        code,
+      };
+
       const {
         rows: [users],
       } = await findAdmin(email);
@@ -194,11 +238,11 @@ const TicketController = {
     }
   },
   delete: async (req, res, next) => {
-    const { email } = req.payload;
-
-    const id = req.params.id;
-
     try {
+      const { email } = req.payload;
+
+      const id = req.params.id;
+
       const {
         rows: [users],
       } = await findAdmin(email);
