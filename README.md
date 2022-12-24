@@ -11,18 +11,19 @@ Project API flyer-app that is used to order airplane tickets.
   - [Role admin](https://github.com/helmipradita/flyer-be/edit/main/README.md#role-admin)
 - [Run Locally](https://github.com/helmipradita/flyer-be/edit/main/README.md#run-locally)
 - [Demo](https://github.com/helmipradita/flyer-be/edit/main/README.md#demo)
-- [API Reference - User](#api-reference---user)
-- [API Reference - Ticket](#api-reference---ticket)
-- [API Reference - Booking](#api-reference---booking)
-- [API Reference - Airlines](#api-reference---airlines)
+-  [x] [API Reference - User](#api-reference---user)
+-  [x] [API Reference - Ticket](#api-reference---ticket)
+-  [x] [API Reference - Booking](#api-reference---booking)
+-  [ ] [API Reference - Airlines](#api-reference---airlines)
+-  [ ] [API Reference - Airport](#api-reference---airport)
 
 ## Screenshots flow
 
 ### Role customer
-![Role customer](https://res.cloudinary.com/dnu5su7ft/image/upload/v1671817359/Role_Customer_2_uovz76.png)
+![Role customer](https://res.cloudinary.com/dnu5su7ft/image/upload/v1671872611/Untitled_Diagram-Role_Customer.drawio_gugkco.png)
 
 ### Role admin
-![Role admin](https://res.cloudinary.com/dnu5su7ft/image/upload/v1671817479/Role_Admin_1_id3rxj.png)
+![Role admin](https://res.cloudinary.com/dnu5su7ft/image/upload/v1671872590/Untitled_Diagram-Role_Admin.drawio_zhxutn.png)
 
 
 ## Run Locally
@@ -353,8 +354,8 @@ Field body form
 | Field            | Type       | Description                                       |
 | :--------------- | :--------- | :------------------------------------------------ |
 | `airlines_id`    | `string`   | **Required**. get from airlines                   |
-| `departure_city` | `string`   | **Required**. departure_city                      |
-| `arrival_city`   | `string`   | **Required**. arrival_city                        |
+| `departure_id` | `string`   | **Required**. departure_id                      |
+| `arrival_id`   | `string`   | **Required**. arrival_id                        |
 | `departure`      | `timestap` | **Required**. departure with format date and time |
 | `arrive`         | `timestap` | **Required**. arrive with format date and time    |
 | `price`          | `number`   | **Required**. price                               |
@@ -371,18 +372,18 @@ Response 200
   "success": true,
   "statusCode": 200,
   "data": {
-    "id": "4a728874-263d-4da5-a0ba-bf157ef728ec",
-    "airlines_id": "392241f5-3bcb-4986-901e-bc44f1d705e6",
-    "departure_city": "Jakarta",
-    "arrival_city": "Medan",
+    "id": "ea226d72-1d77-4910-bd57-111c06de95b5",
+    "airlines_id": "f248e9f9-6069-47a3-946b-376acdfbba39",
+    "departure_id": "eb5f8ab4-fa92-40bc-a3d8-251a110737be",
+    "arrival_id": "3182a2a8-0a2e-45e1-8679-c7f454da4960",
     "departure": "2022-12-21 12:44:46.273231",
     "arrive": "2022-12-21 16:44:46.273231",
-    "price": "320",
-    "stock": "100",
-    "gate": "1",
+    "price": "2950",
+    "stock": "5",
+    "gate": "222",
     "terminal": "1A",
-    "type": "Bisnis",
-    "code": "1A-001"
+    "type": "Economy",
+    "code": "1A-222"
   },
   "message": "insert ticket success"
 }
@@ -412,72 +413,84 @@ Response 200
   "statusCode": 200,
   "data": [
     {
-      "id": "1780f206-3be1-4e99-b696-f2aa7ade6837",
-      "airlines_names": "Lion Air",
-      "logo": "http://res.cloudinary.com/dtow6mgju/image/upload/v1671637485/toko/i8xpvrukruihmwbtbods.png",
-      "departure_city": "Surabaya",
-      "arrival_city": "Tokyo",
-      "departure": "2022-12-22T08:44:46.273Z",
-      "arrive": "2022-12-24T08:44:46.273Z",
-      "price": 3000,
-      "stock": 10,
-      "gate": "1",
-      "terminal": "4B",
-      "type": "Economy",
-      "code": "4B-001"
-    },
-    {
-      "id": "e75147fe-ec70-477d-a97c-9650479b5fa5",
-      "airlines_names": "Garuda Indonesia",
-      "logo": "http://res.cloudinary.com/dtow6mgju/image/upload/v1671638721/toko/scjbbrcuczrp5qlhrha6.png",
-      "departure_city": "Jakarta",
-      "arrival_city": "Singapore",
+      "id": "9e3e5b96-6eed-4a04-9c97-d32048ccc846",
+      "airlines_name": "Super Air Jet",
+      "departure_name": "Jepang",
+      "departure_code": "HND",
+      "arrival_name": "China",
+      "arrival_code": "PEK",
       "departure": "2022-12-21T05:44:46.273Z",
       "arrive": "2022-12-21T09:44:46.273Z",
-      "price": 400,
-      "stock": 30,
-      "gate": "1",
-      "terminal": "1B",
-      "type": "Economy",
-      "code": "1B-001"
-    },
-    {
-      "id": "e6ce7cb3-4d89-46a0-b065-d02c652d7716",
-      "airlines_names": "Garuda Indonesia",
-      "logo": "http://res.cloudinary.com/dtow6mgju/image/upload/v1671638721/toko/scjbbrcuczrp5qlhrha6.png",
-      "departure_city": "China",
-      "arrival_city": "Jepang",
-      "departure": "2022-12-21T05:44:46.273Z",
-      "arrive": "2022-12-21T09:44:46.273Z",
-      "price": 320,
-      "stock": 10,
-      "gate": "4",
-      "terminal": "2B",
+      "price": 3250,
+      "stock": 5,
+      "gate": "222",
+      "terminal": "1A",
       "type": "Bisnis",
-      "code": "2B-004"
+      "code": "1A-222",
+      "created_at": "2022-12-24T01:34:32.690Z",
+      "updated_at": null
     },
     {
-      "id": "5e84d311-252d-4afc-b40a-761d9c059076",
-      "airlines_names": "Lion Air",
-      "logo": "http://res.cloudinary.com/dtow6mgju/image/upload/v1671637485/toko/i8xpvrukruihmwbtbods.png",
-      "departure_city": "Australia",
-      "arrival_city": "Singapore",
+      "id": "ea226d72-1d77-4910-bd57-111c06de95b5",
+      "airlines_name": "Super Air Jet",
+      "departure_name": "Jepang",
+      "departure_code": "HND",
+      "arrival_name": "China",
+      "arrival_code": "PEK",
       "departure": "2022-12-21T05:44:46.273Z",
       "arrive": "2022-12-21T09:44:46.273Z",
-      "price": 320,
-      "stock": 10,
-      "gate": "202",
+      "price": 2950,
+      "stock": 5,
+      "gate": "222",
       "terminal": "1A",
       "type": "Economy",
-      "code": "1A-202"
+      "code": "1A-222",
+      "created_at": "2022-12-24T01:34:49.291Z",
+      "updated_at": null
+    },
+    {
+      "id": "58f5fd73-e11f-4d98-858a-0dca0d4f8ce3",
+      "airlines_name": "Air Asia",
+      "departure_name": "Jepang",
+      "departure_code": "HND",
+      "arrival_name": "Yogyakarta update",
+      "arrival_code": "HND",
+      "departure": "2022-12-21T05:44:46.273Z",
+      "arrive": "2022-12-21T09:44:46.273Z",
+      "price": 2720,
+      "stock": 9,
+      "gate": "111",
+      "terminal": "3B",
+      "type": "Bisnis",
+      "code": "3B-111",
+      "created_at": "2022-12-24T01:24:07.312Z",
+      "updated_at": null
+    },
+    {
+      "id": "b0dbfd53-1baa-4923-a352-dfddd97c77fc",
+      "airlines_name": "Garuda Indonesia",
+      "departure_name": "Jepang",
+      "departure_code": "HND",
+      "arrival_name": "Yogyakarta update",
+      "arrival_code": "HND",
+      "departure": "2022-12-21T05:44:46.273Z",
+      "arrive": "2022-12-21T09:44:46.273Z",
+      "price": 2720,
+      "stock": 9,
+      "gate": "111",
+      "terminal": "3B",
+      "type": "Bisnis",
+      "code": "3B-111",
+      "created_at": "2022-12-24T01:29:05.890Z",
+      "updated_at": null
     }
   ],
   "message": "get ticket success",
   "pagination": {
     "currentPage": 1,
     "limit": 4,
-    "totalData": 18,
-    "totalPage": 5
+    "totalData": 21,
+    "totalPage": 6
   }
 }
 ```
@@ -501,21 +514,21 @@ Response 200
   "success": true,
   "statusCode": 200,
   "data": {
-    "id": "afced89e-aa62-4021-b963-41cdb717a842",
+    "id": "b0dbfd53-1baa-4923-a352-dfddd97c77fc",
     "airlines_names": "Garuda Indonesia",
     "logo": "http://res.cloudinary.com/dtow6mgju/image/upload/v1671638721/toko/scjbbrcuczrp5qlhrha6.png",
-    "departure_city": "Bali",
-    "arrival_city": "Medan",
+    "departure_id": "eb5f8ab4-fa92-40bc-a3d8-251a110737be",
+    "arrival_id": "d2191d94-970f-40e1-9563-c0f59e852efb",
     "departure": "2022-12-21T05:44:46.273Z",
     "arrive": "2022-12-21T09:44:46.273Z",
-    "price": 320,
-    "stock": 10,
-    "gate": "3",
-    "terminal": "1A",
-    "type": "Economy",
-    "code": "1A-003",
-    "created_at": "2022-12-22T21:58:20.119Z",
-    "updated_at": "2022-12-23T00:03:03.570Z"
+    "price": 2720,
+    "stock": 9,
+    "gate": "111",
+    "terminal": "3B",
+    "type": "Bisnis",
+    "code": "3B-111",
+    "created_at": "2022-12-24T01:29:05.890Z",
+    "updated_at": null
   },
   "message": "get ticket success"
 }
@@ -557,10 +570,8 @@ Response 200
   "success": true,
   "statusCode": 200,
   "data": {
-    "id": "afced89e-aa62-4021-b963-41cdb717a842",
+    "id": "b0dbfd53-1baa-4923-a352-dfddd97c77fc",
     "airlines_id": "392241f5-3bcb-4986-901e-bc44f1d705e6",
-    "departure_city": "Jakarta",
-    "arrival_city": "Medan",
     "departure": "2022-12-21 12:44:46.273231",
     "arrive": "2022-12-21 16:44:46.273231",
     "price": "120",
@@ -599,28 +610,33 @@ Response 200
   "success": true,
   "statusCode": 200,
   "data": {
-    "id": "61e033e2-587a-42f6-b74b-fb74497b4e78",
-    "airlines_id": "93793e6b-d201-4274-a4cc-7b22ae01646f",
-    "departure_city": "Jakarta",
-    "arrival_city": "Medan",
+    "id": "e5ef9e3a-bfaa-4159-b530-f9e854037570",
+    "airlines_id": "f248e9f9-6069-47a3-946b-376acdfbba39",
+    "departure_id": "eb5f8ab4-fa92-40bc-a3d8-251a110737be",
+    "arrival_id": "3182a2a8-0a2e-45e1-8679-c7f454da4960",
     "departure": "2022-12-21T05:44:46.273Z",
     "arrive": "2022-12-21T09:44:46.273Z",
-    "price": 320,
-    "stock": 10,
-    "created_at": "2022-12-21T12:32:39.704Z",
-    "updated_at": "2022-12-21T12:32:57.054Z",
-    "gate": "1",
-    "terminal": "1B",
+    "price": 2950,
+    "stock": 5,
+    "gate": "222",
+    "terminal": "1A",
     "type": "Economy",
-    "code": "1B-001"
+    "code": "1A-222",
+    "created_at": "2022-12-24T02:08:58.687Z",
+    "updated_at": null
   },
   "message": "delete ticket success"
 }
 ```
+</details>
+
+
 
 ## API Reference - Booking
 
-API Booking digunakan untuk menambahkan, melihat, mengedit dan menghapus booking users.
+<details>
+<summary>Show</summary>
+<br>
 
 #### Insert Booking
 
@@ -1174,3 +1190,7 @@ Response 200
 }
 ```
 </details>
+
+## API Reference - Airlines
+
+## API Reference - Airport
