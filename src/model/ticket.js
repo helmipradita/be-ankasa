@@ -44,7 +44,7 @@ const findAdmin = (email) => {
 
 const findAirport = (id) => {
   return new Promise((resolve, reject) =>
-    Pool.query(`SELECT * FROM tbl_airport WHERE id='${id}'`, (err, result) => {
+    Pool.query(`SELECT * FROM airport WHERE id='${id}'`, (err, result) => {
       if (!err) {
         resolve(result);
       } else {
@@ -76,8 +76,8 @@ const selectAll = ({ limit, offset, sortBy, sortOrder, search }) => {
               tic.terminal, tic.type, tic.code, tic.created_at, tic.updated_at
       FROM tickets tic
       INNER JOIN airlines air ON tic.airlines_id = air.id
-      INNER JOIN tbl_airport dep ON tic.departure_id = dep.id
-      INNER JOIN tbl_airport arr ON tic.arrival_id = arr.id
+      INNER JOIN airport dep ON tic.departure_id = dep.id
+      INNER JOIN airport arr ON tic.arrival_id = arr.id
       WHERE air.airlines_names
           ILIKE '%${search}%' ORDER BY ${sortBy} ${sortOrder} 
           LIMIT ${limit} OFFSET ${offset}`,
