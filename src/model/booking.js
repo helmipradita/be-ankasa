@@ -1,4 +1,4 @@
-const Pool = require("../config/db");
+const Pool = require('../config/db');
 
 const addBooking = (data) => {
   const { id, id_users, id_airlines, id_tickets, tittle, name, country } = data;
@@ -17,7 +17,7 @@ const addBooking = (data) => {
   });
 };
 const countAll = () => {
-  return Pool.query("SELECT COUNT(*) AS total FROM booking");
+  return Pool.query('SELECT COUNT(*) AS total FROM booking');
 };
 
 const delBooking = (id) => {
@@ -74,10 +74,24 @@ const getBookingAdmin = ({
 }) => {
   return new Promise((resolve, reject) =>
     Pool.query(
-      `SELECT bo.id,bo.id_users,bo.id_tickets,bo.payment,ai.airlines_names as airlines_names
-    ,users.fullname as fullname,ti.arrival_city as arrival_city,ti.departure_city as departure_city,ti.departure as departure FROM booking as bo JOIN airlines as ai ON bo.id_airlines = ai.id
-     JOIN tickets as ti ON bo.id_tickets = ti.id JOIN users as users ON bo.id_users = users.id WHERE bo.id_users ILIKE '%${searchid}%' AND users.fullname ILIKE '%${fullname}%' AND bo.id_tickets ILIKE '%${tickets}%' ORDER BY ${sortBy} ${sortOrder} 
-     LIMIT ${limit} OFFSET ${offset}`,
+      `SELECT bo.id, bo.id_users, users.fullname as fullname, bo.id_tickets,
+          ai.airlines_names as airlines_names,
+          dep.name as departure_name, dep.code as departure_code,
+          arr.name as arrival_name, arr.code as  arrival_code,
+          tic.departure, tic.arrive, tic.code,
+          bo.payment
+      FROM booking as bo
+      INNER JOIN airlines as ai ON bo.id_airlines = ai.id
+      INNER JOIN users as users ON bo.id_users = users.id
+      INNER JOIN tickets tic ON bo.id_tickets = tic.id
+      INNER JOIN airport dep ON tic.departure_id = dep.id
+      INNER JOIN airport arr ON tic.arrival_id = arr.id
+      WHERE bo.id_users
+        ILIKE '%${searchid}%' AND users.fullname
+        ILIKE '%${fullname}%' AND bo.id_tickets
+        ILIKE '%${tickets}%' ORDER BY ${sortBy} ${sortOrder}
+        LIMIT ${limit} OFFSET ${offset}
+      `,
       (err, result) => {
         if (!err) {
           resolve(result);
@@ -99,10 +113,22 @@ const allBookUser = ({
 }) => {
   return new Promise((resolve, reject) =>
     Pool.query(
-      `SELECT bo.id,bo.id_users,bo.payment,ai.airlines_names as airlines_names
-      ,ti.arrival_city as arrival_city,ti.departure_city as departure_city,ti.departure as departure,ti.code as code FROM booking as bo JOIN airlines as ai ON bo.id_airlines = ai.id
-       JOIN tickets as ti ON bo.id_tickets = ti.id WHERE bo.id_users = '${id_users}' AND ti.arrival_city ILIKE '%${search}%' ORDER BY ${sortBy} ${sortOrder} 
-       LIMIT ${limit} OFFSET ${offset}`,
+      `SELECT bo.id, bo.id_users, users.fullname as fullname, bo.id_tickets,
+          ai.airlines_names as airlines_names,
+          dep.name as departure_name, dep.code as departure_code,
+          arr.name as arrival_name, arr.code as  arrival_code,
+          tic.departure, tic.arrive, tic.code,
+          bo.payment
+      FROM booking as bo
+      INNER JOIN airlines as ai ON bo.id_airlines = ai.id
+      INNER JOIN users as users ON bo.id_users = users.id
+      INNER JOIN tickets tic ON bo.id_tickets = tic.id
+      INNER JOIN airport dep ON tic.departure_id = dep.id
+      INNER JOIN airport arr ON tic.arrival_id = arr.id
+      WHERE bo.id_users = '${id_users}' AND ai.airlines_names
+        ILIKE '%${search}%' ORDER BY ${sortBy} ${sortOrder} 
+        LIMIT ${limit} OFFSET ${offset}
+      `,
       (err, result) => {
         if (!err) {
           resolve(result);
@@ -114,14 +140,23 @@ const allBookUser = ({
   );
 };
 
-const detailBook = (id) => {
+const detailBook = (id, id_users) => {
   return new Promise((resolve, reject) =>
     Pool.query(
-      `SELECT bo.id,ti.code as code , ti.type as type ,ti.terminal as terminal,
-      ti.gate as gate,ti.departure as departure,ti.departure_city
-      as departure_city,ti.arrival_city as arrival_city FROM booking as bo JOIN
-      airlines as ai ON bo.id_airlines = ai.id JOIN tickets as ti ON bo.id_tickets = ti.id
-      WHERE bo.id = '${id}'`,
+      `SELECT bo.id, bo.id_users, users.fullname as fullname, bo.id_tickets,
+          ai.airlines_names as airlines_names,
+          dep.name as departure_name, dep.code as departure_code,
+          arr.name as arrival_name, arr.code as  arrival_code,
+          tic.departure, tic.arrive, 
+          bo.passenger_tittle, bo.passenger_name, bo.passenger_country, bo.payment
+      FROM booking as bo
+      INNER JOIN airlines as ai ON bo.id_airlines = ai.id
+      INNER JOIN users as users ON bo.id_users = users.id
+      INNER JOIN tickets tic ON bo.id_tickets = tic.id
+      INNER JOIN airport dep ON tic.departure_id = dep.id
+      INNER JOIN airport arr ON tic.arrival_id = arr.id
+      WHERE bo.id = '${id}'
+      `,
       (err, result) => {
         if (!err) {
           resolve(result);
