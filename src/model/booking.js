@@ -78,7 +78,7 @@ const getBookingAdmin = ({
           ai.airlines_names as airlines_names,
           dep.name as departure_name, dep.code as departure_code,
           arr.name as arrival_name, arr.code as  arrival_code,
-          tic.departure, tic.arrive, tic.code,
+          tic.departure, tic.arrive, tic.gate, tic.terminal, tic.type, tic.code,
           bo.payment
       FROM booking as bo
       INNER JOIN airlines as ai ON bo.id_airlines = ai.id
@@ -117,7 +117,7 @@ const allBookUser = ({
           ai.airlines_names as airlines_names,
           dep.name as departure_name, dep.code as departure_code,
           arr.name as arrival_name, arr.code as  arrival_code,
-          tic.departure, tic.arrive, tic.code,
+          tic.departure, tic.arrive, tic.arrive, tic.gate, tic.terminal, tic.type, tic.code,
           bo.payment
       FROM booking as bo
       INNER JOIN airlines as ai ON bo.id_airlines = ai.id
@@ -147,7 +147,7 @@ const detailBook = (id, id_users) => {
           ai.airlines_names as airlines_names,
           dep.name as departure_name, dep.code as departure_code,
           arr.name as arrival_name, arr.code as  arrival_code,
-          tic.departure, tic.arrive, 
+          tic.departure, tic.arrive, tic.arrive, tic.gate, tic.terminal, tic.type, tic.code,
           bo.passenger_tittle, bo.passenger_name, bo.passenger_country, bo.payment
       FROM booking as bo
       INNER JOIN airlines as ai ON bo.id_airlines = ai.id
