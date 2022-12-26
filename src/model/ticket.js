@@ -69,11 +69,16 @@ const findAirlines = (id) => {
 const selectAll = ({ limit, offset, sortBy, sortOrder, search }) => {
   return new Promise((resolve, reject) =>
     Pool.query(
-      `SELECT tic.id, air.airlines_names as airlines_name, 
+      `SELECT tic.id, air.airlines_names as airlines_name, air.logo as airlines_logo,
             dep.name as departure_name, dep.code as departure_code,
             arr.name as arrival_name, arr.code as  arrival_code,
-            tic.departure, tic.arrive, tic.price, tic.stock, tic.gate, 
-              tic.terminal, tic.type, tic.code, tic.created_at, tic.updated_at
+            tic.departure, tic.arrive, 
+              to_char( departure, 'HH:MI' ) AS departure_time,
+              to_char( departure, 'HH:MI' ) AS arrival_time,  
+              to_char( departure, 'Day, DD Mon YYYY' ) AS departure_full,
+              to_char( departure, 'Day, DD Mon YYYY' ) AS arrival_full,   
+              (tic.arrive - tic.departure) AS travel_time,
+              tic.price, tic.stock, tic.gate, tic.terminal, tic.type, tic.code, tic.created_at, tic.updated_at
       FROM tickets tic
       INNER JOIN airlines air ON tic.airlines_id = air.id
       INNER JOIN airport dep ON tic.departure_id = dep.id
@@ -99,10 +104,19 @@ const countAll = () => {
 const selectById = (id) => {
   return new Promise((resolve, reject) =>
     Pool.query(
-      `SELECT tickets.id, airlines.airlines_names as airlines_names, airlines.logo as logo, tickets.departure_id, tickets.arrival_id, tickets.departure , tickets.arrive, tickets.price, tickets.stock, tickets.gate, tickets.terminal, tickets.type, tickets.code, tickets.created_at, tickets.updated_at
-    FROM tickets
-    INNER JOIN airlines
-    ON tickets.airlines_id = airlines.id WHERE tickets.id='${id}'`,
+      `SELECT tic.id, air.airlines_names as airlines_name, air.logo as airlines_logo, 
+            dep.name as departure_name, dep.code as departure_code,
+            arr.name as arrival_name, arr.code as  arrival_code,
+            tic.departure, tic.arrive, 
+              to_char( departure, 'HH:MI' ) AS departure_time,
+              to_char( departure, 'HH:MI' ) AS arrival_time,  
+              to_char( departure, 'Day, DD Mon YYYY' ) AS departure_full,
+              tic.price, tic.stock, tic.gate, tic.terminal, tic.type, tic.code, tic.created_at, tic.updated_at
+      FROM tickets tic
+      INNER JOIN airlines air ON tic.airlines_id = air.id
+      INNER JOIN airport dep ON tic.departure_id = dep.id
+      INNER JOIN airport arr ON tic.arrival_id = arr.id
+      WHERE tic.id='${id}'`,
       (err, result) => {
         if (!err) {
           resolve(result);
