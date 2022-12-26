@@ -73,10 +73,10 @@ const selectAll = ({ limit, offset, sortBy, sortOrder, search }) => {
             dep.name as departure_name, dep.code as departure_code,
             arr.name as arrival_name, arr.code as  arrival_code,
             tic.departure, tic.arrive, 
-              to_char( departure, 'HH:MI' ) AS departure_time,
-              to_char( arrive, 'HH:MI' ) AS arrival_time,  
-              to_char( departure, 'Day, DD Month YYYY' ) AS departure_full,
-              to_char( arrive, 'Day, DD Month YYYY' ) AS arrival_full,   
+              to_char( tic.departure, 'HH:MI' ) AS departure_time,
+              to_char( tic.arrive, 'HH:MI' ) AS arrival_time,  
+              to_char( tic.departure, 'Day, DD Month YYYY' ) AS departure_full,
+              to_char( tic.arrive, 'Day, DD Month YYYY' ) AS arrival_full,   
               (tic.arrive - tic.departure) AS travel_time,
               tic.price, tic.stock, tic.gate, tic.terminal, tic.type, tic.code, tic.created_at, tic.updated_at
       FROM tickets tic
@@ -108,9 +108,9 @@ const selectById = (id) => {
             dep.name as departure_name, dep.code as departure_code,
             arr.name as arrival_name, arr.code as  arrival_code,
             tic.departure, tic.arrive, 
-              to_char( departure, 'HH:MI' ) AS departure_time,
-              to_char( arrival, 'HH:MI' ) AS arrival_time,  
-              to_char( departure, 'Day, DD Month YYYY' ) AS departure_full,
+              to_char( tic.departure, 'HH:MI' ) AS departure_time,
+              to_char( tic.arrival, 'HH:MI' ) AS arrival_time,  
+              to_char( tic.departure, 'Day, DD Month YYYY' ) AS departure_full,
               tic.price, tic.stock, tic.gate, tic.terminal, tic.type, tic.code, tic.created_at, tic.updated_at
       FROM tickets tic
       INNER JOIN airlines air ON tic.airlines_id = air.id
