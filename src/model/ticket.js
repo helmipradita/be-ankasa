@@ -69,7 +69,7 @@ const findAirlines = (id) => {
 const selectAll = ({ limit, offset, sortBy, sortOrder, search }) => {
   return new Promise((resolve, reject) =>
     Pool.query(
-      `SELECT tic.id, air.id, air.airlines_names as airlines_name, air.logo as airlines_logo,
+      `SELECT tic.id, air.id as id_airlines, air.airlines_names as airlines_name, air.logo as airlines_logo,
             dep.name as departure_name, dep.code as departure_code,
             arr.name as arrival_name, arr.code as  arrival_code,
             tic.departure, tic.arrive, 
@@ -104,12 +104,12 @@ const countAll = () => {
 const selectById = (id) => {
   return new Promise((resolve, reject) =>
     Pool.query(
-      `SELECT tic.id, air.id, air.airlines_names as airlines_name, air.logo as airlines_logo, 
+      `SELECT tic.id, air.id as id_airlines, air.airlines_names as airlines_name, air.logo as airlines_logo, 
             dep.name as departure_name, dep.code as departure_code,
             arr.name as arrival_name, arr.code as  arrival_code,
             tic.departure, tic.arrive, 
               to_char( tic.departure, 'HH:MI' ) AS departure_time,
-              to_char( tic.arrival, 'HH:MI' ) AS arrival_time,  
+              to_char( tic.arrive, 'HH:MI' ) AS arrival_time,  
               to_char( tic.departure, 'Day, DD Month YYYY' ) AS departure_full,
               tic.price, tic.stock, tic.gate, tic.terminal, tic.type, tic.code, tic.created_at, tic.updated_at
       FROM tickets tic
