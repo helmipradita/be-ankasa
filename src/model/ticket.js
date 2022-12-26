@@ -104,7 +104,7 @@ const countAll = () => {
 const selectById = (id) => {
   return new Promise((resolve, reject) =>
     Pool.query(
-      `SELECT tic.id, air.airlines_names as airlines_name, air.logo as airlines_logo, 
+      `SELECT tic.id, air.id, air.airlines_names as airlines_name, air.logo as airlines_logo, 
             dep.name as departure_name, dep.code as departure_code,
             arr.name as arrival_name, arr.code as  arrival_code,
             tic.departure, tic.arrive, 
