@@ -76,7 +76,7 @@ const selectAll = ({ limit, offset, sortBy, sortOrder, search }) => {
               to_char( departure, 'HH:MI' ) AS departure_time,
               to_char( departure, 'HH:MI' ) AS arrival_time,  
               to_char( departure, 'Day, DD Month YYYY' ) AS departure_full,
-              to_char( departure, 'Day, DD Month YYYY' ) AS arrival_full,   
+              to_char( arrival, 'Day, DD Month YYYY' ) AS arrival_full,   
               (tic.arrive - tic.departure) AS travel_time,
               tic.price, tic.stock, tic.gate, tic.terminal, tic.type, tic.code, tic.created_at, tic.updated_at
       FROM tickets tic
@@ -109,7 +109,7 @@ const selectById = (id) => {
             arr.name as arrival_name, arr.code as  arrival_code,
             tic.departure, tic.arrive, 
               to_char( departure, 'HH:MI' ) AS departure_time,
-              to_char( departure, 'HH:MI' ) AS arrival_time,  
+              to_char( arrival, 'HH:MI' ) AS arrival_time,  
               to_char( departure, 'Day, DD Month YYYY' ) AS departure_full,
               tic.price, tic.stock, tic.gate, tic.terminal, tic.type, tic.code, tic.created_at, tic.updated_at
       FROM tickets tic
