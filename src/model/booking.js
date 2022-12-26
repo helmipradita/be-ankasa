@@ -117,7 +117,10 @@ const allBookUser = ({
           ai.airlines_names as airlines_names,
           dep.name as departure_name, dep.code as departure_code,
           arr.name as arrival_name, arr.code as  arrival_code,
-          tic.departure, tic.arrive, tic.arrive, tic.gate, tic.terminal, tic.type, tic.code,
+          tic.departure, tic.arrive, 
+            to_char( tic.departure, 'Day, DD Month YY' ) AS departure_full, 
+            to_char( tic.departure, 'HH:MI' ) AS departure_time,
+            tic.gate, tic.terminal, tic.type, tic.code,
           bo.payment
       FROM booking as bo
       INNER JOIN airlines as ai ON bo.id_airlines = ai.id
@@ -147,7 +150,9 @@ const detailBook = (id, id_users) => {
           ai.airlines_names as airlines_names,
           dep.name as departure_name, dep.code as departure_code,
           arr.name as arrival_name, arr.code as  arrival_code,
-          tic.departure, tic.arrive, tic.arrive, tic.gate, tic.terminal, tic.type, tic.code,
+          tic.departure, tic.arrive, 
+            to_char( tic.departure, 'Day, DD Month YY' ) AS departure_full, 
+            to_char( tic.departure, 'HH:MI' ) AS departure_time, tic.gate, tic.terminal, tic.type, tic.code,
           bo.passenger_tittle, bo.passenger_name, bo.passenger_country, bo.payment
       FROM booking as bo
       INNER JOIN airlines as ai ON bo.id_airlines = ai.id
