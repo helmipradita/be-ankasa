@@ -1,5 +1,5 @@
 const { response } = require(`../middleware/common`);
-const { v4: uuidv4 } = require('uuid');
+const { v4: uuidv4 } = require("uuid");
 
 const {
   addBooking,
@@ -16,7 +16,7 @@ const BookingController = {
   insert: async (req, res) => {
     try {
       const id_users = req.payload.id;
-      let digits = '0123456789';
+      let digits = "0123456789";
       const id = uuidv4();
       console.log(id);
       const dataBook = {
@@ -29,17 +29,17 @@ const BookingController = {
         country: req.body.country,
       };
       await addBooking(dataBook);
-      return response(res, 200, true, null, 'BOOKING SUCCESS');
+      return response(res, 200, true, dataBook, "BOOKING SUCCESS");
     } catch (err) {
-      return response(res, 404, false, err, 'BOOKING FAILED');
+      return response(res, 404, false, err, "BOOKING FAILED");
     }
   },
   delete: async (req, res) => {
     try {
       await delBooking(req.params.id);
-      response(res, 200, true, null, 'delete data success');
+      response(res, 200, true, null, "delete data success");
     } catch (err) {
-      return response(res, 404, false, err, 'BOOKING FAILED');
+      return response(res, 404, false, err, "BOOKING FAILED");
     }
   },
   update: async (req, res) => {
@@ -52,29 +52,29 @@ const BookingController = {
         country: req.body.country,
       };
       await updateBooking(data);
-      return response(res, 200, true, data, 'UPDATE BOOKING SUCCESS');
+      return response(res, 200, true, data, "UPDATE BOOKING SUCCESS");
     } catch (err) {
-      return response(res, 404, false, err, 'UPDATE BOOKING FAILED');
+      return response(res, 404, false, err, "UPDATE BOOKING FAILED");
     }
   },
   updatePayment: async (req, res) => {
     try {
       await updateStatusPayment(req.params.id);
-      return response(res, 200, true, null, 'UPDATE STATUS PAYMENT SUCCESS');
+      return response(res, 200, true, null, "UPDATE STATUS PAYMENT SUCCESS");
     } catch (err) {
-      return response(res, 404, false, err, 'UPDATE STATUS PAYMENT FAILED');
+      return response(res, 404, false, err, "UPDATE STATUS PAYMENT FAILED");
     }
   },
   getAllAdmin: async (req, res) => {
     try {
       const page = parseInt(req.query.page) || 1;
       const limit = parseInt(req.query.limit) || 5;
-      const sortBy = req.query.sortBy || 'id';
-      const sortOrder = req.query.sortOrder || 'DESC';
-      const fullname = req.query.fullname || '';
-      const tickets = req.query.tickets || '';
+      const sortBy = req.query.sortBy || "id";
+      const sortOrder = req.query.sortOrder || "DESC";
+      const fullname = req.query.fullname || "";
+      const tickets = req.query.tickets || "";
       const offset = (page - 1) * limit;
-      const searchid = req.query.searchid || '';
+      const searchid = req.query.searchid || "";
 
       const result = await getBookingAdmin({
         searchid,
@@ -103,21 +103,21 @@ const BookingController = {
         200,
         true,
         result.rows,
-        'GET DATA SUCCESS',
+        "GET DATA SUCCESS",
         pagination
       );
     } catch (err) {
       console.log(err);
-      return response(res, 404, false, err, 'GET DATA FAILED', err);
+      return response(res, 404, false, err, "GET DATA FAILED", err);
     }
   },
   getBooking: async (req, res) => {
     try {
       const page = parseInt(req.query.page) || 1;
       const limit = parseInt(req.query.limit) || 5;
-      const sortBy = req.query.sortBy || 'id';
-      const sortOrder = req.query.sortOrder || 'DESC';
-      const search = req.query.search || '';
+      const sortBy = req.query.sortBy || "id";
+      const sortOrder = req.query.sortOrder || "DESC";
+      const search = req.query.search || "";
       const offset = (page - 1) * limit;
       const id_users = req.payload.id;
 
@@ -147,11 +147,11 @@ const BookingController = {
         200,
         true,
         result.rows,
-        'GET DATA SUCCESS',
+        "GET DATA SUCCESS",
         pagination
       );
     } catch (err) {
-      return response(res, 400, false, err, 'GET DATA FAILED');
+      return response(res, 400, false, err, "GET DATA FAILED");
     }
   },
   detailBook: async (req, res) => {
@@ -160,9 +160,9 @@ const BookingController = {
 
       const result = await detailBook(id);
 
-      return response(res, 200, true, result.rows, 'GET DATA SUCCESS');
+      return response(res, 200, true, result.rows, "GET DATA SUCCESS");
     } catch (err) {
-      return response(res, 400, false, err, 'GET DATA FAILED');
+      return response(res, 400, false, err, "GET DATA FAILED");
     }
   },
 };
