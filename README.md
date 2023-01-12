@@ -351,7 +351,7 @@ Field auth
 | :------- | :------- | :------------------------------------------------------------- |
 | `bearer` | `string` | **Required**. token from response login, only admin can insert |
 
-Field body form
+Field body form 
 
 | Field            | Type       | Description                                       |
 | :--------------- | :--------- | :------------------------------------------------ |
