@@ -6,16 +6,18 @@ Project API flyer-app that is used to order airplane tickets.
 
 ### List
 
-- [Screenshoots flow](https://github.com/helmipradita/flyer-be/edit/main/README.md#screenshots-flow)
-  - [Role customer](https://github.com/helmipradita/flyer-be/edit/main/README.md#role-customer)
-  - [Role admin](https://github.com/helmipradita/flyer-be/edit/main/README.md#role-admin)
-- [Run Locally](https://github.com/helmipradita/flyer-be/edit/main/README.md#run-locally)
-- [Demo](https://github.com/helmipradita/flyer-be/edit/main/README.md#demo)
--  [x] [API Reference - User](#api-reference---user)
--  [x] [API Reference - Ticket](#api-reference---ticket)
--  [x] [API Reference - Booking](#api-reference---booking)
--  [x] [API Reference - Airlines](#api-reference---airlines)
--  [x] [API Reference - Airport](#api-reference---airport)
+* [Screenshoots flow](https://github.com/helmipradita/flyer-be/edit/main/README.md#screenshots-flow)
+  * [Role customer](https://github.com/helmipradita/flyer-be/edit/main/README.md#role-customer)
+  * [Role admin](https://github.com/helmipradita/flyer-be/edit/main/README.md#role-admin)
+* [Run Locally](https://github.com/helmipradita/flyer-be/edit/main/README.md#run-locally)
+* [Demo](https://github.com/helmipradita/flyer-be/edit/main/README.md#demo)
+*  [x] [API Reference - User](#api-reference---user)
+*  [x] [API Reference - Ticket](#api-reference---ticket)
+*  [x] [API Reference - Booking](#api-reference---booking)
+*  [x] [API Reference - Airlines](#api-reference---airlines)
+*  [x] [API Reference - Airport](#api-reference---airport)
+* [Related Project](#related-project)
+* [Contact](#contact)
 
 ## Screenshots flow
 
@@ -1470,3 +1472,20 @@ Response 200
 }
 ```
 </details>
+
+## Related Project
+* [`Flyer Demo`](https://ankasa.rizkyproject.my.id/login)
+* [`Flyer REST API`](https://flyer-be-production.up.railway.app/ticket)
+* [`Peworld REST API Repository`](https://github.com/helmipradita/flyer-be)
+
+## Contact
+
+Contributors names and contact info
+
+* Frontend Developers
+  * Easy Destini Manik [@easyManik](https://github.com/easyManik)
+  * Alvin Jamal Azkya [@alvinjamal](https://github.com/alvinjamal)
+  * Sri Yuniar [@sriyuniar541](https://github.com/sriyuniar541)
+* Backend Developers
+  * Rizky S [@rizkysyp](https://github.com/rizkysyp)
+  * Helmi Pradita [@helmipradita](https://github.com/helmipradita)
