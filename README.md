@@ -11,7 +11,7 @@
     <a href="https://github.com/helmipradita/be-ankasa"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://hire.helmipradita.dev">View Demo</a>
+    <a href="https://api-ticket.helmipradita.dev">View Demo</a>
   </p>
 </p>
 
@@ -105,7 +105,7 @@ Start the server
 API deploy 
 
 ```bash
-https://be-ankasa-production.up.railway.app
+https://api-ticket.helmipradita.dev
 ```
 
 ## API Reference - User
@@ -1495,8 +1495,8 @@ Response 200
 
 ## Related Project
 * [`Flyer Demo`](https://ankasa.rizkyproject.my.id/login)
-* [`Flyer REST API`](https://be-ankasa-production.up.railway.app/ticket)
-* [`Peworld REST API Repository`](https://github.com/helmipradita/be-ankasa)
+* [`Flyer REST API`](https://api-ticket.helmipradita.dev/ticket)
+* [`Ankasa REST API Repository`](https://github.com/helmipradita/be-ankasa)
 
 ## Contact
 
