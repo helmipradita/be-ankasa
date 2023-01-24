@@ -1,3 +1,23 @@
+<br />
+<p align="center">
+
+  <h3 align="center">Flyer App | Ankasa Ticket</h3>
+  <p align="center">
+    <image align="center" width="200" src='https://res.cloudinary.com/dnu5su7ft/image/upload/v1674602322/illustration_qhdapw.png' />
+  </p>
+
+  <p align="center">
+    <br />
+    <a href="https://github.com/helmipradita/be-ankasa"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://hire.helmipradita.dev">View Demo</a>
+  </p>
+</p>
+
+
+
+
 # Flyer App - Backend
 
 Project API flyer-app that is used to order airplane tickets.
@@ -6,11 +26,11 @@ Project API flyer-app that is used to order airplane tickets.
 
 ### List
 
-* [Screenshoots flow](https://github.com/helmipradita/flyer-be/edit/main/README.md#screenshots-flow)
-  * [Role customer](https://github.com/helmipradita/flyer-be/edit/main/README.md#role-customer)
-  * [Role admin](https://github.com/helmipradita/flyer-be/edit/main/README.md#role-admin)
-* [Run Locally](https://github.com/helmipradita/flyer-be/edit/main/README.md#run-locally)
-* [Demo](https://github.com/helmipradita/flyer-be/edit/main/README.md#demo)
+* [Screenshoots flow](https://github.com/helmipradita/be-ankasa/edit/main/README.md#screenshots-flow)
+  * [Role customer](https://github.com/helmipradita/be-ankasa/edit/main/README.md#role-customer)
+  * [Role admin](https://github.com/helmipradita/be-ankasa/edit/main/README.md#role-admin)
+* [Run Locally](https://github.com/helmipradita/be-ankasa/edit/main/README.md#run-locally)
+* [Demo](https://github.com/helmipradita/be-ankasa/edit/main/README.md#demo)
 *  [x] [API Reference - User](#api-reference---user)
 *  [x] [API Reference - Ticket](#api-reference---ticket)
 *  [x] [API Reference - Booking](#api-reference---booking)
@@ -33,13 +53,13 @@ Project API flyer-app that is used to order airplane tickets.
 Clone the project
 
 ```bash
-  git clone https://github.com/helmipradita/flyer-be
+  git clone https://github.com/helmipradita/be-ankasa
 ```
 
 Go to the project directory
 
 ```bash
-  cd flyer-be
+  cd be-ankasa
 ```
 
 Install dependencies
@@ -85,7 +105,7 @@ Start the server
 API deploy 
 
 ```bash
-https://flyer-be-production.up.railway.app
+https://be-ankasa-production.up.railway.app
 ```
 
 ## API Reference - User
@@ -1475,8 +1495,8 @@ Response 200
 
 ## Related Project
 * [`Flyer Demo`](https://ankasa.rizkyproject.my.id/login)
-* [`Flyer REST API`](https://flyer-be-production.up.railway.app/ticket)
-* [`Peworld REST API Repository`](https://github.com/helmipradita/flyer-be)
+* [`Flyer REST API`](https://be-ankasa-production.up.railway.app/ticket)
+* [`Peworld REST API Repository`](https://github.com/helmipradita/be-ankasa)
 
 ## Contact
 
